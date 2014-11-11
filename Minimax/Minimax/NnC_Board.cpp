@@ -28,5 +28,5 @@ public:
 	}
 
 private:
-	int spaces[9]
+	int spaces[9];
 };
