@@ -15,10 +15,8 @@ public:
 
 		for (int i = 0; i < possibleMoves.size(); i++)
 		{
-			boardValueWrapper wrappedMove = boardValueWrapper(possibleMoves[i], 0);
-			constructMoveTree(&wrappedMove, player);
+			boardValueWrapper wrappedMove = boardValueWrapper(possibleMoves[i]);
 			possibleWrappedMoves.push_back(wrappedMove);
-			
 		}
 
 		return *board;
@@ -32,22 +30,19 @@ public:
 private:
 	Board_Base* board;
 
-	struct boardValueWrapper
+	class boardValueWrapper
 	{
 	public:
-		int value = 0;
 		Board_Base* board;
 
-		boardValueWrapper(Board_Base b, int v)
+		boardValueWrapper(Board_Base b)
 		{
-			value = v;
 			board = &b;
 		}
-	};
 
-	void constructMoveTree(boardValueWrapper* wrappedMove, bool player)
-	{
-		vector<Board_Base> possibleMoves = wrappedMove->board->listPossibleMoves(player);
-		wrappedMove->value = 1;
-	}
+		int getValue()
+		{
+			return board->calculateHeuristic();
+		}
+	};
 };

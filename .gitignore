@@ -41,3 +41,17 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+Minimax/Minimax.sln
+Minimax/Minimax.sdf
+*.suo
+*.obj
+*.log
+*.tlog
+*.exe
+*.ilk
+*.opensdf
+*.idb
+*.vcxproj
+*.filters
+*.pdb
