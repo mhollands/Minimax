@@ -5,11 +5,16 @@ using namespace std;
 
 int main()
 {
-	Board_Base board = NnCBoard();
-	MinimaxEngine engine(&board);
 
-	Board_Base newMove = engine.getSuggestedMove(true);
+	NnCBoard board = NnCBoard(1, 0);
+	cout << board.calculateHeuristic() << endl;
+	board.print();
+	cout << endl;
+	MinimaxEngine engine = MinimaxEngine(&board);
+	Board_Base* newMove = engine.getSuggestedMove(true);
+	newMove->print();
 
-	int a;
-	cin >> a;
-}	
+
+	int blah;
+	cin >> blah;
+};

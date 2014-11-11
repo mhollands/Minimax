@@ -8,18 +8,25 @@ public:
 		board = initialBoard;
 	}
 
-	Board_Base getSuggestedMove(bool player)
+	Board_Base* getSuggestedMove(int depth)
 	{
-		vector<Board_Base> possibleMoves = board->listPossibleMoves(player);
-		vector<boardValueWrapper> possibleWrappedMoves;
+		vector<Board_Base*> possibleMoves = board->listPossibleMoves(true);
+
+		int maxValue = 0;
+		Board_Base* suggestedMove = board;
 
 		for (int i = 0; i < possibleMoves.size(); i++)
 		{
-			boardValueWrapper wrappedMove = boardValueWrapper(possibleMoves[i]);
-			possibleWrappedMoves.push_back(wrappedMove);
+			int childValue = possibleMoves[i]->getValue(depth, true);
+
+			if (childValue > maxValue)
+			{
+				suggestedMove = possibleMoves[i];
+				maxValue = childValue;
+			}
 		}
 
-		return *board;
+		return suggestedMove;
 	}
 
 	bool applyMove(Board_Base newMove)
@@ -29,20 +36,4 @@ public:
 
 private:
 	Board_Base* board;
-
-	class boardValueWrapper
-	{
-	public:
-		Board_Base* board;
-
-		boardValueWrapper(Board_Base b)
-		{
-			board = &b;
-		}
-
-		int getValue()
-		{
-			return board->calculateHeuristic();
-		}
-	};
 };
