@@ -12,26 +12,37 @@ public:
 	{
 		vector<Board_Base*> possibleMoves = board->listPossibleMoves(true);
 
-		int maxValue = 0;
+		int maxValue = INT_MIN;
+		bool assigned = false;
 		Board_Base* suggestedMove = board;
 
 		for (int i = 0; i < possibleMoves.size(); i++)
 		{
-			int childValue = possibleMoves[i]->getValue(depth, true);
+			int childValue = possibleMoves[i]->getValue(depth, false);
 
-			if (childValue > maxValue)
+			if (childValue > maxValue || !assigned)
 			{
+				if (assigned)
+				{
+					delete suggestedMove;
+				}
+
+				assigned = true;
 				suggestedMove = possibleMoves[i];
 				maxValue = childValue;
+				continue;
 			}
+
+			delete possibleMoves[i];
 		}
 
 		return suggestedMove;
 	}
 
-	bool applyMove(Board_Base newMove)
+	bool applyMove(Board_Base* newMove)
 	{
-		return false;
+		//need to check legal here here
+		board = newMove;
 	}
 
 private:

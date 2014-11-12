@@ -31,6 +31,11 @@ public:
 		return 0;
 	}
 
+	virtual Board_Base* clone()
+	{
+		return nullptr;
+	}
+
 	int getValue(int depth, bool player)
 	{
 		vector<Board_Base*> childMoves = listPossibleMoves(player);
@@ -40,14 +45,17 @@ public:
 			return calculateHeuristic();
 		}
 		
+		bool assigned = false;
 		int value = 0;
 		for (int i = 0; i < childMoves.size(); i++)
 		{
 			int childValue = childMoves[i]->getValue(depth - 1, !player);
+			delete childMoves[i];
 
-			if (player &&  childValue > value)
+			if ((player &&  childValue > value) || !assigned)
 			{
 				value = childValue;
+				assigned = true;
 				continue;
 			}
 

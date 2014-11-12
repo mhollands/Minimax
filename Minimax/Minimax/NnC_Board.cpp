@@ -31,6 +31,40 @@ public:
 
 			spaces[i] = 0;
 		}
+		spaces[8] = 0;
+	}
+
+	Board_Base* clone(long newPiece)
+	{
+
+	}
+
+	vector<Board_Base*> listPossibleMoves(bool player)
+	{
+		vector<Board_Base*> possibleMoves;
+
+		if (calculateHeuristic() != 0)
+		{
+			return possibleMoves;
+		}
+
+		int newSpaces[9];
+		for (int i = 0; i < 9; i++)
+		{
+			newSpaces[i] = spaces[i];
+		}
+
+		for (int i = 0; i < 9; i++)
+		{
+			if (spaces[i] == 0)
+			{
+				newSpaces[i] = (player ? 1 : -1);
+				possibleMoves.push_back(new NnCBoard(newSpaces));
+				newSpaces[i] = 0;
+			}
+		}
+
+		return possibleMoves;
 	}
 
 	int calculateHeuristic()
@@ -122,4 +156,12 @@ public:
 
 private:
 	int spaces[9];
+
+	NnCBoard(int newSpaces[9])
+	{
+		for (int i = 0; i < 9; i++)
+		{
+			spaces[i] = newSpaces[i];
+		}
+	}
 };
