@@ -36,6 +36,11 @@ public:
 		return nullptr;
 	}
 
+	virtual void setPiece(long data)
+	{
+		
+	}
+
 	int getValue(int depth, bool player)
 	{
 		vector<Board_Base*> childMoves = listPossibleMoves(player);

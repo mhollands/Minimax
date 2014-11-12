@@ -34,9 +34,27 @@ public:
 		spaces[8] = 0;
 	}
 
-	Board_Base* clone(long newPiece)
+	Board_Base* clone()
 	{
+		int newSpaces[9];
+		for (int i = 0; i < 9; i++)
+		{
+			newSpaces[i] = spaces[i];
+		}
 
+		return new NnCBoard(newSpaces);
+	}
+
+	void setPiece(long data)
+	{
+		if (data > 1000)
+		{
+			spaces[data - 1000] = -1;
+			return;
+		}
+
+		spaces[data] = 1;
+		return;
 	}
 
 	vector<Board_Base*> listPossibleMoves(bool player)
