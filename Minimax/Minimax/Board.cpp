@@ -40,36 +40,4 @@ public:
 	{
 		
 	}
-
-	int getValue(int depth, bool player)
-	{
-		vector<Board_Base*> childMoves = listPossibleMoves(player);
-
-		if (depth == 0 || childMoves.size() == 0)
-		{
-			return calculateHeuristic();
-		}
-		
-		bool assigned = false;
-		int value = 0;
-		for (int i = 0; i < childMoves.size(); i++)
-		{
-			int childValue = childMoves[i]->getValue(depth - 1, !player);
-			delete childMoves[i];
-
-			if ((player &&  childValue > value) || !assigned)
-			{
-				value = childValue;
-				assigned = true;
-				continue;
-			}
-
-			if (!player && childValue < value)
-			{
-				value = childValue;
-			}
-		}
-
-		return value;
-	}
 };

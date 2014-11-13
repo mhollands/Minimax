@@ -18,7 +18,7 @@ public:
 
 		for (int i = 0; i < possibleMoves.size(); i++)
 		{
-			int childValue = possibleMoves[i]->getValue(depth, false);
+			int childValue = getBoardValue(possibleMoves[i], depth, false);
 
 			if (childValue > maxValue || !assigned)
 			{
@@ -43,6 +43,38 @@ public:
 	{
 		//need to check legal here here
 		board = newMove;
+	}
+
+	int getBoardValue(Board_Base* board, int depth, bool player)
+	{
+		vector<Board_Base*> childMoves = board->listPossibleMoves(player);
+
+		if (depth == 0 || childMoves.size() == 0)
+		{
+			return board->calculateHeuristic();
+		}
+
+		bool assigned = false;
+		int value = 0;
+		for (int i = 0; i < childMoves.size(); i++)
+		{
+			int childValue = getBoardValue(childMoves[i], depth - 1, !player);
+			delete childMoves[i];
+
+			if ((player &&  childValue > value) || !assigned)
+			{
+				value = childValue;
+				assigned = true;
+				continue;
+			}
+
+			if (!player && childValue < value)
+			{
+				value = childValue;
+			}
+		}
+
+		return value;
 	}
 
 private:
