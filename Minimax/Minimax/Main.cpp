@@ -3,7 +3,8 @@
 
 int main()
 {
-	Board_Base* board = new NnCBoard(0, 0);
+	int spaces[9] = { 1, 1, -1, -1, -1, 1, 1, 0, 0 };
+	Board_Base* board = new NnCBoard();
 	board->print();
 	std::cout << endl;
 

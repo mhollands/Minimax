@@ -13,6 +13,14 @@ public:
 		}
 	}
 
+	NnCBoard(int newSpaces[9])
+	{
+		for (int i = 0; i < 9; i++)
+		{
+			spaces[i] = newSpaces[i];
+		}
+	}
+
 	NnCBoard(int a, int b)
 	{
 		for (int i = 0; i < 8; i++)
@@ -174,12 +182,4 @@ public:
 
 private:
 	int spaces[9];
-
-	NnCBoard(int newSpaces[9])
-	{
-		for (int i = 0; i < 9; i++)
-		{
-			spaces[i] = newSpaces[i];
-		}
-	}
 };

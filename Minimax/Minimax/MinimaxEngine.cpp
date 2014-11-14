@@ -3,6 +3,8 @@
 class MinimaxEngine
 {
 public:
+	long moveCount = 0;
+	long pathCount = 0;
 	MinimaxEngine(Board_Base* initialBoard)
 	{
 		board = initialBoard;
@@ -10,6 +12,8 @@ public:
 
 	Board_Base* getSuggestedMove(int depth)
 	{
+		moveCount = 0;
+		pathCount = 0;
 		vector<Board_Base*> possibleMoves = board->listPossibleMoves(true);
 
 		int maxValue = INT_MIN;
@@ -36,6 +40,8 @@ public:
 			delete possibleMoves[i];
 		}
 
+		cout << "Visited " << moveCount << " moves." << endl;
+		cout << "Visited " << pathCount << " paths." << endl;
 		return suggestedMove;
 	}
 
@@ -47,10 +53,12 @@ public:
 
 	int getBoardValue(Board_Base* board, int depth, bool player)
 	{
+		moveCount++;
 		vector<Board_Base*> childMoves = board->listPossibleMoves(player);
 
 		if (depth == 0 || childMoves.size() == 0)
 		{
+			pathCount++;
 			return board->calculateHeuristic();
 		}
 
