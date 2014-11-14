@@ -10,7 +10,7 @@ public:
 		board = initialBoard;
 	}
 
-	Board_Base* getSuggestedMove(int depth)
+	Board_Base* getSuggestedMove(int depth, bool alphaBetaPruning)
 	{
 		moveCount = 0;
 		pathCount = 0;
@@ -22,7 +22,16 @@ public:
 
 		for (int i = 0; i < possibleMoves.size(); i++)
 		{
-			int childValue = getBoardValue(possibleMoves[i], depth, false);
+			int childValue = 0;
+
+			if (alphaBetaPruning)
+			{
+				childValue = getBoardValueAB(possibleMoves[i], depth, false, INT_MIN, INT_MAX);
+			}
+			else
+			{
+				childValue = getBoardValue(possibleMoves[i], depth, false);
+			}
 
 			if (childValue > maxValue || !assigned)
 			{
@@ -34,6 +43,7 @@ public:
 				assigned = true;
 				suggestedMove = possibleMoves[i];
 				maxValue = childValue;
+
 				continue;
 			}
 
@@ -49,6 +59,54 @@ public:
 	{
 		//need to check legal here here
 		board = newMove;
+	}
+
+	int getBoardValueAB(Board_Base* board, int depth, bool player, int a, int b)
+	{
+		moveCount++;
+		vector<Board_Base*> childMoves = board->listPossibleMoves(player);
+
+		if (depth == 0 || childMoves.size() == 0)
+		{
+			pathCount++;
+			return board->calculateHeuristic();
+		}
+
+		bool assigned = false;
+		int value = 0;
+		for (int i = 0; i < childMoves.size(); i++)
+		{
+			int childValue = getBoardValueAB(childMoves[i], depth - 1, !player, a, b);
+			delete childMoves[i];
+
+			if (player && (childValue > a || !assigned))
+			{
+				a = childValue;
+				assigned = true;
+			}
+			
+			if (!player && (childValue < b || !assigned))
+			{
+				b = childValue;
+				assigned = true;
+			}
+
+			if (b <= a)
+			{
+				for (i = i + 1; i < childMoves.size(); i++)
+				{
+					delete childMoves[i];
+				}
+				break;
+			}
+		}
+
+		if (player)
+		{
+			return a;
+		}
+
+		return b;
 	}
 
 	int getBoardValue(Board_Base* board, int depth, bool player)

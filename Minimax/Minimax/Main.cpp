@@ -11,7 +11,7 @@ int main()
 	for (int i = 0; i < 10; i++)
 	{
 		MinimaxEngine engine = MinimaxEngine(board);
-		Board_Base* newMove = engine.getSuggestedMove(9);
+		Board_Base* newMove = engine.getSuggestedMove(9, true);
 
 		if (newMove == board)
 		{
@@ -23,7 +23,7 @@ int main()
 		board->print();
 		std::cout << endl;
 
-		if (board->calculateHeuristic() != 0)
+		if (board->countPossibleMoves(false) == 0)
 		{
 			break;
 		}
