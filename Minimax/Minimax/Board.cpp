@@ -40,4 +40,9 @@ public:
 	{
 		
 	}
+
+	virtual ~Board_Base()
+	{
+
+	}
 };

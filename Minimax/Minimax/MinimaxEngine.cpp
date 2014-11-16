@@ -43,7 +43,6 @@ public:
 				assigned = true;
 				suggestedMove = possibleMoves[i];
 				maxValue = childValue;
-
 				continue;
 			}
 
@@ -65,9 +64,14 @@ public:
 	{
 		moveCount++;
 		vector<Board_Base*> childMoves = board->listPossibleMoves(player);
-
+		
 		if (depth == 0 || childMoves.size() == 0)
 		{
+			for (int i = 0; i < childMoves.size(); i++)
+			{
+				delete childMoves[i];
+			}
+
 			pathCount++;
 			return board->calculateHeuristic();
 		}
@@ -93,9 +97,9 @@ public:
 
 			if (b <= a)
 			{
-				for (i = i + 1; i < childMoves.size(); i++)
+				for (int j = i + 1; j < childMoves.size(); j++)
 				{
-					delete childMoves[i];
+					delete childMoves[j];
 				}
 				break;
 			}
@@ -116,6 +120,11 @@ public:
 
 		if (depth == 0 || childMoves.size() == 0)
 		{
+			for (int i = 0; i < childMoves.size(); i++)
+			{
+				delete childMoves[i];
+			}
+
 			pathCount++;
 			return board->calculateHeuristic();
 		}

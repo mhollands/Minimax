@@ -4,14 +4,13 @@
 
 int main()
 {
-	
 	Board_Base* b = new Othello_Board();
 	b->print();
-
+	
 	for (int i = 0; i < 10; i++)
 	{
 		MinimaxEngine engine = MinimaxEngine(b);
-		Board_Base* newMove = engine.getSuggestedMove(0, true);
+		Board_Base* newMove = engine.getSuggestedMove(6, true);
 
 		delete b;
 		b = newMove;

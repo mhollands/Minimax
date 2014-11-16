@@ -3,7 +3,7 @@
 class Othello_Board : public Board_Base
 {
 private:
-	int spaces[8][8];
+	__int8 spaces[8][8];
 
 	bool applyMove(int space, bool player)
 	{
@@ -31,7 +31,8 @@ private:
 				int checkSpaceX = spaceX;
 				int checkSpaceY = spaceY;
 				bool started = false;
-				for (v = 1; (checkSpaceX = spaceX + v*i) < 8 & (checkSpaceY = spaceY + v*j) < 8
+				bool lineOfAttack = false;
+				for (v = 1; ((checkSpaceX = spaceX + v*i) < 8) & ((checkSpaceY = spaceY + v*j) < 8)
 						&& checkSpaceX >= 0 && checkSpaceY >= 0; v++)
 				{
 					bool quitVector = false;
@@ -47,6 +48,7 @@ private:
 							if (started)
 							{
 								validMove = true;
+								lineOfAttack = true;
 							}
 							quitVector = true;
 							break;
@@ -60,6 +62,7 @@ private:
 						{
 							if (started)
 							{
+								lineOfAttack = true;
 								validMove = true;
 							}
 							quitVector = true;
@@ -76,7 +79,8 @@ private:
 					}
 				}
 
-				if (validMove)
+				
+				if (lineOfAttack)
 				{
 					bool ended = false;
 					while(checkSpaceX != spaceX || checkSpaceY != spaceY)
@@ -86,6 +90,7 @@ private:
 						checkSpaceY -= j;
 					}
 				}
+				
 
 			}
 		}
@@ -104,11 +109,15 @@ private:
 				newSpaces[i][j] = spaces[i][j];
 			}
 		}
-
+	
 		return new Othello_Board(newSpaces);
 	}
 
 public:
+	~Othello_Board()
+	{
+		
+	}
 
 	Othello_Board()
 	{
@@ -134,6 +143,7 @@ public:
 				spaces[i][j] = 0;
 			}
 		}
+		
 	}
 
 	Othello_Board(int newSpaces[8][8])
@@ -145,6 +155,7 @@ public:
 				spaces[i][j] = newSpaces[i][j];
 			}
 		}
+			
 	}
 
 	int countPossibleMoves(bool player)
@@ -201,7 +212,7 @@ public:
 					break;
 				}
 			}
-			cout << endl;
+			cout << (j*8 + 7) << endl;
 		}
 	}
 
@@ -222,6 +233,11 @@ public:
 	Board_Base* clone()
 	{
 		return privateClone();
+	}
+
+	void dispose()
+	{
+		
 	}
 
 	void setPiece(long data)
