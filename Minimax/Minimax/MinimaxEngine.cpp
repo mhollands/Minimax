@@ -17,11 +17,11 @@ public:
 		vector<Board_Base*> possibleMoves = board->listPossibleMoves(true);
 
 		int maxValue = INT_MIN;
-		bool assigned = false;
-		Board_Base* suggestedMove = board;
+		Board_Base* suggestedMove = board->clone();
 
 		for (int i = 0; i < possibleMoves.size(); i++)
 		{
+			moveCount++;
 			int childValue = 0;
 
 			if (alphaBetaPruning)
@@ -33,14 +33,9 @@ public:
 				childValue = getBoardValue(possibleMoves[i], depth, false);
 			}
 
-			if (childValue > maxValue || !assigned)
+			if (childValue > maxValue)
 			{
-				if (assigned)
-				{
-					delete suggestedMove;
-				}
-
-				assigned = true;
+				delete suggestedMove;
 				suggestedMove = possibleMoves[i];
 				maxValue = childValue;
 				continue;
@@ -69,6 +64,7 @@ public:
 		{
 			for (int i = 0; i < childMoves.size(); i++)
 			{
+				moveCount++;
 				delete childMoves[i];
 			}
 

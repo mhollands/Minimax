@@ -21,27 +21,6 @@ public:
 		}
 	}
 
-	NnCBoard(int a, int b)
-	{
-		for (int i = 0; i < 8; i++)
-		{
-			if ((a & (1 << i)) != 0)
-			{
-				spaces[i] = 1;
-				continue;
-			}
-
-			if ((b & (1 << i)) != 0)
-			{
-				spaces[i] = -1;
-				continue;
-			}
-
-			spaces[i] = 0;
-		}
-		spaces[8] = 0;
-	}
-
 	Board_Base* clone()
 	{
 		int newSpaces[9];
@@ -166,18 +145,22 @@ public:
 		}
 	}
 
-	int countPossibleMoves(bool player)
+	bool isLastBoard()
 	{
-		int count = 0;
+		if (calculateHeuristic() != 0)
+		{
+			return true;
+		}
+
 		for (int i = 0; i < 9; i++)
 		{
 			if (spaces[i] == 0)
 			{
-				count++;
+				return false;
 			}
 		}
 
-		return count;
+		return true;
 	}
 
 private:

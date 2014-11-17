@@ -158,9 +158,35 @@ public:
 			
 	}
 
-	int countPossibleMoves(bool player)
+	bool isLastBoard()
 	{
-		return 0;
+		int plus = 0;
+		int minus = 0;
+		for (int i = 0; i < 8; i++)
+		{
+			for (int j = 0; j < 8; j++)
+			{
+				if (spaces[i][j] == 0)
+				{
+					continue;
+				}
+
+				if (spaces[i][j] == 1)
+				{
+					plus++;
+					continue;
+				}
+
+				minus++;
+			}
+		}
+
+		if (plus == 0 || minus == 0 || minus + plus == 64)
+		{
+			return true;
+		}
+
+		return false;
 	}
 
 	vector<Board_Base*> listPossibleMoves(bool player)
@@ -186,11 +212,6 @@ public:
 		}
 
 		return newMoves;
-	}
-
-	bool moveIsLegal(Board_Base* newMove)
-	{
-		return false;
 	}
 
 	void print()
@@ -233,11 +254,6 @@ public:
 	Board_Base* clone()
 	{
 		return privateClone();
-	}
-
-	void dispose()
-	{
-		
 	}
 
 	void setPiece(long data)
