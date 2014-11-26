@@ -1,5 +1,6 @@
 #include <iostream>
-//#include "NnC_Board.cpp"
+#include "MinimaxEngine.h"
+#include "NnC_Board.cpp"
 #include "Othello_Board.cpp"
 
 int main()
@@ -15,7 +16,7 @@ int main()
 		delete b;
 		b = newMove;
 		b->print();
-		std::cout << endl;
+		std::cout << std::endl;
 
 		if (b->isLastBoard())
 		{
@@ -23,16 +24,16 @@ int main()
 		}
 
 		int newPos;
-		cin >> newPos;
+		std::cin >> newPos;
 
 		b->setPiece(newPos + 1000);
 		b->print();
-		std::cout << endl;
+		std::cout << std::endl;
 	}
 
-	std::cout << "Game Over" << endl;
+	std::cout << "Game Over" << std::endl;
 	delete b;
-
+	
 	int a;
-	cin >> a;
+	std::cin >> a;
 };

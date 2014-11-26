@@ -1,43 +1,39 @@
+#include "Board.h"
 #include <iostream>
 #include <vector>
-
 using namespace std;
 
-class Board_Base
+vector<Board_Base*> Board_Base::listPossibleMoves(bool player)
 {
-public:
-	virtual vector<Board_Base*> listPossibleMoves(bool player)
-	{
-		return vector<Board_Base*>();
-	}
+	return vector<Board_Base*>();
+}
 
-	virtual void print()
-	{
-		cout << "Basic Board" << endl;
-	}
+void Board_Base::print()
+{
+	cout << "Basic Board" << endl;
+}
 
-	virtual int calculateHeuristic()
-	{
-		return 0;
-	}
+int Board_Base::calculateHeuristic()
+{
+	return 0;
+}
 
-	virtual Board_Base* clone()
-	{
-		return nullptr;
-	}
+Board_Base* Board_Base::clone()
+{
+	return nullptr;
+}
 
-	virtual void setPiece(long data)
-	{
+void Board_Base::setPiece(long data)
+{
 		
-	}
+}
 
-	virtual bool isLastBoard()
-	{
-		return false;
-	}
+bool Board_Base::isLastBoard()
+{
+	return false;
+}
 
-	virtual ~Board_Base()
-	{
+Board_Base::~Board_Base()
+{
 
-	}
-};
+}

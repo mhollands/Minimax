@@ -1,4 +1,8 @@
-#include "Base_Header.h"
+#include <vector>
+#include <iostream>
+#include "Board.h"
+
+using namespace std;
 
 class Othello_Board : public Board_Base
 {

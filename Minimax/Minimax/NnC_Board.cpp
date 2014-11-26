@@ -1,4 +1,7 @@
-#include "Base_Header.h"
+#include "Board.h"
+#include <iostream>
+
+using namespace std;
 
 class NnCBoard: public Board_Base
 {
